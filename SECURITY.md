@@ -2,7 +2,7 @@
 
 **Version**: 1.0  
 **Effective Date**: March 25, 2026  
-**Last Updated**: March 25, 2026  
+**Last Updated**: March 25, 2026
 
 ---
 
@@ -18,12 +18,12 @@ This security policy applies to all MentorMinds smart contracts deployed on Stel
 
 ### In-Scope Contracts
 
-| Contract | Status | Deployment |
-|----------|--------|------------|
-| **Escrow Contract** (`escrow/src/lib.rs`) | Pre-audit | Testnet TBD |
+| Contract                                                        | Status    | Deployment  |
+| --------------------------------------------------------------- | --------- | ----------- |
+| **Escrow Contract** (`escrow/src/lib.rs`)                       | Pre-audit | Testnet TBD |
 | **Verification Contract** (`contracts/verification/src/lib.rs`) | Pre-audit | Testnet TBD |
-| **MNT Token Contract** (`contracts/mnt-token/src/lib.rs`) | Pre-audit | Testnet TBD |
-| **Referral Contract** (`contracts/referral/src/lib.rs`) | Pre-audit | Testnet TBD |
+| **MNT Token Contract** (`contracts/mnt-token/src/lib.rs`)       | Pre-audit | Testnet TBD |
+| **Referral Contract** (`contracts/referral/src/lib.rs`)         | Pre-audit | Testnet TBD |
 
 ### Out-of-Scope
 
@@ -41,6 +41,7 @@ This security policy applies to all MentorMinds smart contracts deployed on Stel
 ### What is Responsible Disclosure?
 
 Responsible disclosure means:
+
 1. **Privately reporting** vulnerabilities to our security team
 2. **Allowing reasonable time** for us to investigate and remediate
 3. **Coordinating public disclosure** after a fix is available
@@ -52,6 +53,7 @@ When you discover a potential vulnerability:
 
 1. **Report immediately** via email to: `security@mentorminds.io`
 2. **Include detailed information**:
+
    - Type of vulnerability
    - Full description of the issue
    - Step-by-step reproduction instructions
@@ -60,6 +62,7 @@ When you discover a potential vulnerability:
    - Any suggested mitigations (if known)
 
 3. **Provide proof of concept** (if possible):
+
    - Code snippets
    - Transaction hashes (testnet only)
    - Screenshots or videos
@@ -72,6 +75,7 @@ When you discover a potential vulnerability:
 ### What NOT to Do
 
 ❌ **Do NOT**:
+
 - Exploit vulnerabilities on mainnet deployments
 - Attempt to drain funds from escrows
 - Launch denial-of-service attacks
@@ -80,6 +84,7 @@ When you discover a potential vulnerability:
 - Demand rewards or threaten disclosure
 
 ✅ **DO**:
+
 - Act in good faith and with integrity
 - Respect user.py and privacy of users
 - Make a good-faith effort to avoid privacy violations
@@ -92,12 +97,14 @@ When you discover a potential vulnerability:
 ### Critical Severity
 
 Vulnerabilities that could result in:
+
 - Direct loss of user funds
 - Permanent locking of funds
 - Unauthorized minting of tokens
 - Complete protocol insolvency
 
 **Examples**:
+
 - Reentrancy leading to fund theft
 - Authorization bypass allowing fund withdrawal
 - Integer overflow enabling infinite minting
@@ -109,12 +116,14 @@ Vulnerabilities that could result in:
 ### High Severity
 
 Vulnerabilities that could result in:
+
 - Temporary fund freezing
 - Manipulation of fee calculations
 - Bypassing of critical business logic
 - Significant service disruption
 
 **Examples**:
+
 - Fee calculation errors (>1% deviation)
 - Dispute resolution manipulation
 - Auto-release timing exploits
@@ -126,12 +135,14 @@ Vulnerabilities that could result in:
 ### Medium Severity
 
 Vulnerabilities that could result in:
+
 - Minor financial loss (<1% of affected funds)
 - Information leakage
 - Non-critical logic errors
 - UI/UX confusion leading to user error
 
 **Examples**:
+
 - Off-by-one errors in counters
 - Missing event emissions
 - Edge cases in timestamp handling
@@ -143,12 +154,14 @@ Vulnerabilities that could result in:
 ### Low Severity
 
 Issues that have minimal security impact:
+
 - Best practice deviations
 - Code quality issues
 - Documentation errors
 - Minor gas optimizations
 
 **Examples**:
+
 - Missing NatSpec comments
 - Suboptimal storage layout
 - Non-critical clippy warnings
@@ -159,6 +172,7 @@ Issues that have minimal security impact:
 ### Not Eligible for Rewards
 
 The following are generally not eligible for bug bounties:
+
 - Already reported or known issues
 - Issues in out-of-scope components
 - Theoretical attacks without practical exploit
@@ -182,12 +196,14 @@ The following are generally not eligible for bug bounties:
 ### Reward Determination
 
 Rewards are determined by:
+
 1. **Severity** of the vulnerability
 2. **Impact** on users and protocol
 3. **Quality** of the report
 4. **Exploitability** in current state
 
 **Note**: Rewards are discretionary and may be adjusted based on:
+
 - Quality and completeness of the report
 - Cooperation during remediation
 - Public disclosure behavior
@@ -226,6 +242,7 @@ Day 30+:  Mainnet deployment and coordinated disclosure
 ### Expedited Timeline
 
 For **Critical** vulnerabilities:
+
 - Immediate escalation to CTO
 - Daily status updates
 - Emergency patch deployment if needed
@@ -234,6 +251,7 @@ For **Critical** vulnerabilities:
 ### Delayed Disclosure
 
 We may request delayed disclosure when:
+
 - Exploit is actively being developed
 - Patch requires complex coordination
 - External dependencies need updating
@@ -248,18 +266,21 @@ Maximum delay: 90 days from initial report
 ### Testing Guidelines
 
 ✅ **Safe Testing Environments**:
+
 - Use local Soroban environment (`soroban env`)
 - Deploy to testnet only with small amounts
 - Never test on mainnet unless explicitly authorized
 - Use provided test fixtures and snapshots
 
 ✅ **Recommended Tools**:
+
 - Cargo fuzz testing
 - Property-based testing (proptest)
 - Static analysis (cargo-clippy, cargo-audit)
 - Manual code review with annotation
 
 ❌ **Prohibited Activities**:
+
 - Testing on production/mainnet contracts
 - Interacting with other users' escrows
 - Attempting to profit from discovered bugs
@@ -270,21 +291,25 @@ Maximum delay: 90 days from initial report
 Based on our threat model, prioritize:
 
 1. **Authorization Logic**:
+
    - `require_auth()` calls in privileged functions
    - Admin-only function guards
    - Multi-sig implementation (future)
 
 2. **Financial Calculations**:
+
    - Fee computation (`platform_fee = amount * fee_bps / 10000`)
    - Dispute split calculations
    - Rounding and truncation behavior
 
 3. **State Transitions**:
+
    - Escrow status machine (Active → Released/Refunded/Resolved)
    - Double-release prevention
    - Dispute resolution flow
 
 4. **External Calls**:
+
    - Token contract interactions
    - Cross-contract calls (referral → MNT mint)
    - Reentrancy guards
@@ -308,6 +333,7 @@ Based on our threat model, prioritize:
 ### Alternative Contacts
 
 For urgent matters only:
+
 - **Telegram**: @mentorminds_security
 - **Discord**: Security Team role in official server
 - **Twitter DM**: @MentorMinds (for initial contact only)
@@ -318,40 +344,50 @@ For urgent matters only:
 ## Vulnerability Report
 
 ### Summary
+
 [Brief description]
 
 ### Severity Assessment
+
 [Critical/High/Medium/Low with justification]
 
 ### Affected Component
+
 - Contract: [escrow/verification/mnt-token/referral]
 - Function: [function name]
 - Version: [commit hash or tag]
 
 ### Description
+
 [Detailed explanation]
 
 ### Reproduction Steps
+
 1. Step 1
 2. Step 2
 3. ...
 
 ### Impact
+
 [What can an attacker achieve?]
 
 ### Proof of Concept
+
 [Code, transaction hash, or screenshot]
 
 ### Suggested Mitigation
+
 [If known]
 
 ### References
+
 [Similar vulnerabilities, academic papers, etc.]
 
 ### Researcher Info
-- Name/Alias: 
-- Contact: 
-- Previous disclosures (optional): 
+
+- Name/Alias:
+- Contact:
+- Previous disclosures (optional):
 ```
 
 ---
@@ -361,17 +397,20 @@ For urgent matters only:
 ### Current Protections
 
 1. **Code Quality**:
+
    - ✅ All contracts pass `cargo clippy -- -D warnings`
    - ✅ Comprehensive unit tests (50+ per contract)
    - ✅ Integration tests with snapshot testing
    - ✅ Fuzzing infrastructure ready
 
 2. **Access Control**:
+
    - ✅ `require_auth()` on all privileged operations
    - ✅ Admin key stored on hardware wallet (mainnet)
    - ✅ Multi-sig planned for v1.1
 
 3. **Economic Safeguards**:
+
    - ✅ Fee cap at 10% (1000 bps)
    - ✅ Supply cap on MNT token (100M)
    - ✅ Auto-release prevents permanent lockup
@@ -406,6 +445,7 @@ The MentorMinds team will **not** pursue legal action against security researche
 ### Limitation of Liability
 
 This safe harbor does **not** protect:
+
 - Intentional misconduct or fraud
 - Violation of applicable laws
 - Breach of confidentiality agreements
@@ -414,11 +454,13 @@ This safe harbor does **not** protect:
 ### Mutual Non-Disclosure
 
 By reporting a vulnerability, you agree to:
+
 - Keep details confidential until coordinated disclosure
 - Not share exploit code with third parties
 - Allow MentorMinds to lead remediation timeline
 
 We agree to:
+
 - Acknowledge your contribution (unless anonymous preferred)
 - Credit you in public disclosures
 - Advocate for recognition in the security community
@@ -431,7 +473,7 @@ We recognize security researchers who contribute to platform safety.
 
 ### Distinguished Contributors
 
-*To be updated after first responsible disclosures*
+_To be updated after first responsible disclosures_
 
 ### Recognition Levels
 
@@ -441,6 +483,7 @@ We recognize security researchers who contribute to platform safety.
 🎖️ **Special Recognition**: Exceptional contributions
 
 **Privacy Options**:
+
 - Full name and link (default)
 - Alias/pseudonym only
 - Anonymous (no public credit)
@@ -480,13 +523,14 @@ This security policy is reviewed quarterly and updated as needed.
 
 ### Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | 2026-03-25 | Initial release |
+| Version | Date       | Changes         |
+| ------- | ---------- | --------------- |
+| 1.0     | 2026-03-25 | Initial release |
 
 ### Notification of Changes
 
 Significant changes will be announced via:
+
 - GitHub repository updates
 - Discord security channel
 - Twitter @MentorMinds
@@ -524,7 +568,7 @@ A: Only with their explicit consent. We prefer direct researcher contact.
 Questions about this policy? Reach out:
 
 **Email**: security@mentorminds.io  
-**Subject Line**: "Security Policy Inquiry"  
+**Subject Line**: "Security Policy Inquiry"
 
 We aim to respond within 24 hours.
 

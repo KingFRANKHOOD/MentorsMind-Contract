@@ -1,7 +1,7 @@
 # Trust Assumptions - MentorMinds Smart Contracts
 
 **Version**: 1.0  
-**Date**: March 25, 2026  
+**Date**: March 25, 2026
 
 ---
 
@@ -17,14 +17,14 @@ This document outlines the trust assumptions for users, developers, and auditors
 
 The admin address holds significant power over the escrow contract ecosystem:
 
-| Capability | Scope | Constraints |
-|------------|-------|-------------|
-| **Update Platform Fee** | Can change fee from 0% to 10% | Hard cap at 1000 bps (10%) enforced by code |
-| **Update Treasury** | Can redirect fee recipient | No constraints; can be any address |
-| **Approve/Remove Tokens** | Controls which tokens can be used | Must satisfy SEP-41 interface |
-| **Refund Escrows** | Can refund Active or Disputed escrows to learner | Cannot refund Released or Resolved escrows |
-| **Resolve Disputes** | Can split disputed funds 0-100% to mentor | Must be in Disputed status; percentage bounded |
-| **Initialize Contract** | Sets initial parameters | One-time call; cannot be re-initialized |
+| Capability                | Scope                                            | Constraints                                    |
+| ------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| **Update Platform Fee**   | Can change fee from 0% to 10%                    | Hard cap at 1000 bps (10%) enforced by code    |
+| **Update Treasury**       | Can redirect fee recipient                       | No constraints; can be any address             |
+| **Approve/Remove Tokens** | Controls which tokens can be used                | Must satisfy SEP-41 interface                  |
+| **Refund Escrows**        | Can refund Active or Disputed escrows to learner | Cannot refund Released or Resolved escrows     |
+| **Resolve Disputes**      | Can split disputed funds 0-100% to mentor        | Must be in Disputed status; percentage bounded |
+| **Initialize Contract**   | Sets initial parameters                          | One-time call; cannot be re-initialized        |
 
 ### 1.2 What Users Must Trust
 
@@ -47,6 +47,7 @@ Users **DO NOT** need to trust that the admin will:
 ### 1.4 Admin Key Security Requirements
 
 **MANDATORY FOR MAINNET**:
+
 - ✅ Hardware wallet required (Ledger Nano X/S+ recommended)
 - ✅ Seed phrase stored on metal plate in fireproof safe
 - ✅ Backup hardware wallet with same seed stored offsite
@@ -61,12 +62,12 @@ Users **DO NOT** need to trust that the admin will:
 
 The MentorMinds backend (Node.js/TypeScript API) interacts with the smart contracts:
 
-| Function | Description | Trust Required |
-|----------|-------------|----------------|
-| **Transaction Submission** | Submits user-signed transactions to Stellar network | Medium |
-| **Key Management** | May hold user keys if using custodial wallet | High |
-| **UI/UX Guidance** | Suggests gas prices, transaction parameters | Medium |
-| **Database Tracking** | Maintains off-chain index of escrows | Low |
+| Function                   | Description                                         | Trust Required |
+| -------------------------- | --------------------------------------------------- | -------------- |
+| **Transaction Submission** | Submits user-signed transactions to Stellar network | Medium         |
+| **Key Management**         | May hold user keys if using custodial wallet        | High           |
+| **UI/UX Guidance**         | Suggests gas prices, transaction parameters         | Medium         |
+| **Database Tracking**      | Maintains off-chain index of escrows                | Low            |
 
 ### 2.2 What Users Must Trust
 
@@ -102,11 +103,13 @@ Users may **bypass the backend entirely** by:
 ### 3.1 Stellar Network
 
 **Trust Assumptions**:
+
 - ✅ Stellar validators maintain consensus honestly
 - ✅ Soroban runtime executes contracts correctly
 - ✅ Network remains available and decentralized
 
 **Risks**:
+
 - Network congestion could delay transactions
 - Protocol upgrades could affect contract behavior
 - Validator collusion (>67%) could rewrite history
@@ -116,11 +119,13 @@ Users may **bypass the backend entirely** by:
 ### 3.2 Token Contracts (USDC, PYUSD, etc.)
 
 **Trust Assumptions**:
+
 - ✅ Approved tokens implement SEP-41 correctly
 - ✅ Token contracts don't have hidden transfer restrictions
 - ✅ Token issuers maintain peg/stability
 
 **Risks**:
+
 - Token contract bugs could block transfers
 - Issuer could freeze addresses (USDC-specific)
 - Depeg events could affect escrow value
@@ -130,11 +135,13 @@ Users may **bypass the backend entirely** by:
 ### 3.3 Soroban SDK
 
 **Trust Assumptions**:
+
 - ✅ SDK correctly implements authorization checks
 - ✅ No vulnerabilities in cryptographic primitives
 - ✅ Storage TTL mechanism works as documented
 
 **Risks**:
+
 - SDK bugs could affect all Soroban contracts
 - Breaking changes between versions
 
@@ -176,26 +183,29 @@ Users **cannot**:
 
 ### 5.1 Honest Behavior Incentives
 
-| Actor | Honest Incentive | Dishonest Consequence |
-|-------|------------------|----------------------|
-| **Learner** | Pay for completed sessions | Reputation damage; no future mentors |
-| **Mentor** | Deliver quality sessions | Dispute risk; loss of verified status |
-| **Admin** | Fair dispute resolution | Platform reputation; long-term viability |
-| **Treasury** | Collect fees over time | Killing platform kills fee revenue |
+| Actor        | Honest Incentive           | Dishonest Consequence                    |
+| ------------ | -------------------------- | ---------------------------------------- |
+| **Learner**  | Pay for completed sessions | Reputation damage; no future mentors     |
+| **Mentor**   | Deliver quality sessions   | Dispute risk; loss of verified status    |
+| **Admin**    | Fair dispute resolution    | Platform reputation; long-term viability |
+| **Treasury** | Collect fees over time     | Killing platform kills fee revenue       |
 
 ### 5.2 Attack Economics
 
 **Attacking as Learner**:
+
 - Cost: Lose escrowed funds if dishonestly disputed
 - Benefit: Potentially free session (if admin rules in favor)
 - Risk: Mentor dispute + evidence → learner loses
 
 **Attacking as Mentor**:
+
 - Cost: Reputation loss; verification revocation
 - Benefit: Payment for incomplete sessions (if admin rules in favor)
 - Risk: Learner dispute + evidence → mentor loses
 
 **Attacking as Admin**:
+
 - Cost: Platform destruction; legal liability
 - Benefit: Steal fees (capped at 10%) or manipulate one dispute
 - Risk: Community backlash; potential legal action
@@ -241,22 +251,22 @@ Users **cannot**:
 
 ### MentorMinds vs. PayPal Escrow
 
-| Aspect | PayPal | MentorMinds |
-|--------|--------|-------------|
-| **Custody** | PayPal holds funds | Smart contract holds funds |
-| **Dispute Resolution** | PayPal decides (opaque) | Admin decides (transparent) |
-| **Fees** | ~3-5% + fixed | 0-10% (configurable) |
-| **Access** | Permissioned (KYC) | Permissionless (wallet only) |
-| **Transparency** | Private | Fully public on-chain |
+| Aspect                 | PayPal                  | MentorMinds                  |
+| ---------------------- | ----------------------- | ---------------------------- |
+| **Custody**            | PayPal holds funds      | Smart contract holds funds   |
+| **Dispute Resolution** | PayPal decides (opaque) | Admin decides (transparent)  |
+| **Fees**               | ~3-5% + fixed           | 0-10% (configurable)         |
+| **Access**             | Permissioned (KYC)      | Permissionless (wallet only) |
+| **Transparency**       | Private                 | Fully public on-chain        |
 
 ### MentorMinds vs. Direct Payment
 
-| Aspect | Direct Payment | MentorMinds Escrow |
-|--------|---------------|-------------------|
-| **Timing** | Immediate | Delayed until release |
-| **Risk (Learner)** | High (prepayment) | Low (funds protected) |
-| **Risk (Mentor)** | Low (paid upfront) | Medium (performance risk) |
-| **Dispute Option** | Chargeback (costly) | On-chain resolution |
+| Aspect             | Direct Payment      | MentorMinds Escrow        |
+| ------------------ | ------------------- | ------------------------- |
+| **Timing**         | Immediate           | Delayed until release     |
+| **Risk (Learner)** | High (prepayment)   | Low (funds protected)     |
+| **Risk (Mentor)**  | Low (paid upfront)  | Medium (performance risk) |
+| **Dispute Option** | Chargeback (costly) | On-chain resolution       |
 
 ---
 
@@ -278,11 +288,13 @@ Users **cannot**:
 ### 8.3 Compliance Responsibilities
 
 **Users**:
+
 - Responsible for own tax reporting
 - Must comply with local laws on cryptocurrency use
 - Should verify mentor credentials independently
 
 **Platform**:
+
 - Terms of service prohibit illegal use
 - Cooperation with law enforcement (if legally required)
 - No guarantee of regulatory compliance in all jurisdictions
@@ -294,15 +306,18 @@ Users **cannot**:
 ### Scenario 1: Admin Key Compromise
 
 **What Happens**:
+
 - Attacker gains control of admin private key
 - Can resolve disputes dishonestly, update treasury
 
 **User Impact**:
+
 - Active escrows still protected (attacker can't steal directly)
 - Disputed escrows at risk (attacker controls resolution)
 - Future fees redirected to attacker's treasury
 
 **Mitigation**:
+
 - Switch to new admin address via contract upgrade
 - Multi-sig reduces single point of failure
 - Hardware wallet makes remote compromise harder
@@ -310,14 +325,17 @@ Users **cannot**:
 ### Scenario 2: Smart Contract Bug
 
 **What Happens**:
+
 - Critical vulnerability discovered (e.g., authorization bypass)
 - Attacker exploits and drains escrows
 
 **User Impact**:
+
 - Loss of locked funds
 - No recourse for recovery
 
 **Mitigation**:
+
 - External security audit before mainnet
 - Bug bounty program
 - Upgrade mechanism for patches
@@ -326,14 +344,17 @@ Users **cannot**:
 ### Scenario 3: Platform Shutdown
 
 **What Happens**:
+
 - MentorMinds team abandons project
 - Backend API goes offline
 
 **User Impact**:
+
 - UI unavailable for creating escrows
 - Cannot contact support
 
 **Good News**:
+
 - **Smart contracts remain operational**
 - Users can still interact directly via CLI/Laboratory
 - Funds not lost; auto-release still works
@@ -389,6 +410,7 @@ If you answered "no" to any question, seek clarification before proceeding.
 ## Appendix: Contact & Support
 
 For questions about trust assumptions:
+
 - Email: security@mentorminds.io
 - Documentation: https://docs.mentorminds.io
 - Community: Discord, Telegram

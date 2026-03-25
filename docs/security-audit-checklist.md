@@ -2,7 +2,7 @@
 
 **Version**: 1.0  
 **Date**: March 25, 2026  
-**Status**: Ready for Third-Party Audit  
+**Status**: Ready for Third-Party Audit
 
 ---
 
@@ -12,13 +12,13 @@ This checklist tracks all preparations required before engaging a third-party se
 
 ### Overall Status
 
-| Category | Status | Completion |
-|----------|--------|------------|
-| Documentation | ✅ Complete | 100% |
-| Code Quality | ✅ Complete | 100% |
-| Testing | ✅ Complete | 100% |
-| Test Environment | 🟡 Ready to Deploy | 90% |
-| Dependencies | ✅ Complete | 100% |
+| Category         | Status             | Completion |
+| ---------------- | ------------------ | ---------- |
+| Documentation    | ✅ Complete        | 100%       |
+| Code Quality     | ✅ Complete        | 100%       |
+| Testing          | ✅ Complete        | 100%       |
+| Test Environment | 🟡 Ready to Deploy | 90%        |
+| Dependencies     | ✅ Complete        | 100%       |
 
 ---
 
@@ -27,6 +27,7 @@ This checklist tracks all preparations required before engaging a third-party se
 ### 1.1 Core Security Documents
 
 - [x] **Threat Model Document** (`docs/threat-model.md`)
+
   - [x] System overview and architecture
   - [x] Trust boundaries defined
   - [x] Threat actors identified
@@ -37,6 +38,7 @@ This checklist tracks all preparations required before engaging a third-party se
   - [x] Risk assessment matrix
 
 - [x] **Trust Assumptions** (`docs/trust-assumptions.md`)
+
   - [x] Admin capabilities and constraints
   - [x] User trust requirements
   - [x] Backend system assumptions
@@ -46,6 +48,7 @@ This checklist tracks all preparations required before engaging a third-party se
   - [x] Worst-case scenarios
 
 - [x] **Security Policy** (`SECURITY.md`)
+
   - [x] Responsible disclosure guidelines
   - [x] Vulnerability categories
   - [x] Bug bounty program structure
@@ -64,6 +67,7 @@ This checklist tracks all preparations required before engaging a third-party se
 ### 1.2 Technical Documentation
 
 - [x] **README.md** (Root)
+
   - [x] Project overview
   - [x] Installation instructions
   - [x] Build commands
@@ -105,12 +109,13 @@ cargo audit
 
 **Dependencies Reviewed**:
 
-| Dependency | Version | Status | Notes |
-|------------|---------|--------|-------|
-| soroban-sdk | 21.0.0 | ✅ Current | No known CVEs |
-| soroban-token-sdk | 21.0.0 | ✅ Current | No known CVEs |
+| Dependency        | Version | Status     | Notes         |
+| ----------------- | ------- | ---------- | ------------- |
+| soroban-sdk       | 21.0.0  | ✅ Current | No known CVEs |
+| soroban-token-sdk | 21.0.0  | ✅ Current | No known CVEs |
 
 **Actions Required**:
+
 - [ ] Run `cargo audit` after cargo-audit installation
 - [ ] Review any warnings and update dependencies if needed
 - [ ] Document any accepted risks from legacy dependencies
@@ -140,12 +145,12 @@ cargo test --workspace
 
 **Coverage by Contract**:
 
-| Contract | Tests | Status | Key Scenarios Covered |
-|----------|-------|--------|----------------------|
-| **Escrow** | 50+ | ✅ PASS | create, release, dispute, resolve, refund, auto-release, fee deduction |
-| **Verification** | 4 | ✅ PASS | verify, revoke, expiry, admin-only |
-| **MNT Token** | 5 | ✅ PASS | mint, burn, transfer, approve, supply cap |
-| **Referral** | 4 | ✅ PASS | register, fulfill, claim, self-referral prevention |
+| Contract         | Tests | Status  | Key Scenarios Covered                                                  |
+| ---------------- | ----- | ------- | ---------------------------------------------------------------------- |
+| **Escrow**       | 50+   | ✅ PASS | create, release, dispute, resolve, refund, auto-release, fee deduction |
+| **Verification** | 4     | ✅ PASS | verify, revoke, expiry, admin-only                                     |
+| **MNT Token**    | 5     | ✅ PASS | mint, burn, transfer, approve, supply cap                              |
+| **Referral**     | 4     | ✅ PASS | register, fulfill, claim, self-referral prevention                     |
 
 ### 3.2 Test Categories Verified
 
@@ -188,6 +193,7 @@ cargo test --workspace
 - [ ] Verify all deployments via Stellar Expert
 
 **Deployment Scripts Ready**:
+
 - [x] Step-by-step commands in `docs/audit-test-environment-setup.md`
 - [x] Pre-configured test scenarios documented
 - [x] Monitoring scripts provided
@@ -196,14 +202,15 @@ cargo test --workspace
 
 **Account Requirements**:
 
-| Account | Purpose | Required XLM | Status |
-|---------|---------|--------------|--------|
-| Admin | Contract administration | 100 XLM | ⏳ Pending deployment |
-| Treasury | Fee collection | 50 XLM | ⏳ Pending deployment |
-| Learner | Test escrow creation | 100 XLM | ⏳ Pending deployment |
-| Mentor | Test session delivery | 50 XLM | ⏳ Pending deployment |
+| Account  | Purpose                 | Required XLM | Status                |
+| -------- | ----------------------- | ------------ | --------------------- |
+| Admin    | Contract administration | 100 XLM      | ⏳ Pending deployment |
+| Treasury | Fee collection          | 50 XLM       | ⏳ Pending deployment |
+| Learner  | Test escrow creation    | 100 XLM      | ⏳ Pending deployment |
+| Mentor   | Test session delivery   | 50 XLM       | ⏳ Pending deployment |
 
 **Funding Method**:
+
 - Use Stellar Laboratory: https://laboratory.stellar.org/#account-creator?network=test
 - Or Friendbot API when available
 
@@ -228,21 +235,25 @@ cargo test --workspace
 All limitations are fully documented in threat model and trust assumptions:
 
 1. **Single Admin Key** (v1.0)
+
    - Risk: Single point of failure
    - Mitigation: Hardware wallet requirement
    - Future: Multi-sig in v1.1
 
 2. **No Emergency Pause**
+
    - Risk: Cannot freeze all operations instantly
    - Mitigation: Fee increase deterrent, refund mechanism
    - Rationale: Soroban best practices favor explicit controls
 
 3. **Admin-Controlled Verification**
+
    - Risk: Centralized process
    - Mitigation: On-chain audit trail, process controls
    - Note: Required for KYC/compliance
 
 4. **Simple Token Allowance**
+
    - Risk: No expiration on approvals
    - Mitigation: Acceptable for MVP
    - Future: Enhancement possible
@@ -255,10 +266,12 @@ All limitations are fully documented in threat model and trust assumptions:
 ### 5.2 Accepted Economic Risks
 
 1. **Fee Cap at 10%**
+
    - Acceptable: Market standard is 2-5%
    - Headroom allows future increases if needed
 
 2. **Auto-Release Default 72h**
+
    - Balanced: Enough time for disputes
    - Configurable: Can be adjusted at initialization
 
@@ -294,15 +307,15 @@ All limitations are fully documented in threat model and trust assumptions:
 
 **Estimated Duration**: 4-6 weeks
 
-| Phase | Duration | Activities |
-|-------|----------|------------|
-| **Preparation** | Week 1 | Deploy testnet, provide access |
-| **Assessment** | Weeks 2-3 | Code review, testing, fuzzing |
-| |
-| **Reporting** | Week 4 | Draft report, findings |
-| **Remediation** | Weeks 5-6 | Fix critical/high issues |
-| **Verification** | Week 7 | Auditor verifies fixes |
-| **Publication** | Week 8 | Public report release |
+| Phase            | Duration  | Activities                     |
+| ---------------- | --------- | ------------------------------ |
+| **Preparation**  | Week 1    | Deploy testnet, provide access |
+| **Assessment**   | Weeks 2-3 | Code review, testing, fuzzing  |
+|                  |
+| **Reporting**    | Week 4    | Draft report, findings         |
+| **Remediation**  | Weeks 5-6 | Fix critical/high issues       |
+| **Verification** | Week 7    | Auditor verifies fixes         |
+| **Publication**  | Week 8    | Public report release          |
 
 ### 6.3 Audit Scope Definition
 
@@ -382,6 +395,7 @@ ls -lh target/wasm32-unknown-unknown/release/*.wasm
 ```
 
 **Expected Output**:
+
 - ✅ 0 compilation warnings
 - ✅ 0 test failures
 - ✅ All WASM files generated
@@ -416,22 +430,22 @@ stellar contract invoke --id $ESCROW_ID --network testnet -- get_escrow_count
 
 Based on market research (Q1 2026):
 
-| Auditor Tier | Cost Range | Timeline | Deliverables |
-|--------------|------------|----------|--------------|
+| Auditor Tier      | Cost Range | Timeline  | Deliverables                             |
+| ----------------- | ---------- | --------- | ---------------------------------------- |
 | **Top-Tier Firm** | $50k-$100k | 6-8 weeks | Full report, formal verification, retest |
-| **Mid-Tier Firm** | $20k-$50k | 4-6 weeks | Report with findings, retest |
-| **Boutique/Solo** | $5k-$20k | 2-4 weeks | Basic report, limited retest |
+| **Mid-Tier Firm** | $20k-$50k  | 4-6 weeks | Report with findings, retest             |
+| **Boutique/Solo** | $5k-$20k   | 2-4 weeks | Basic report, limited retest             |
 
 **Recommended**: Mid-tier firm with Soroban experience
 
 ### 8.2 Additional Costs
 
-| Item | Estimated Cost |
-|------|----------------|
-| Testnet deployment fees | ~10 XLM ($1-2) |
-| Bug bounties (optional) | $1k-$10k |
-| Travel for onsite (if needed) | $2k-$5k |
-| Legal review of report | $5k-$10k |
+| Item                          | Estimated Cost |
+| ----------------------------- | -------------- |
+| Testnet deployment fees       | ~10 XLM ($1-2) |
+| Bug bounties (optional)       | $1k-$10k       |
+| Travel for onsite (if needed) | $2k-$5k        |
+| Legal review of report        | $5k-$10k       |
 
 **Total Budget Recommendation**: $30k-$70k including contingency
 
@@ -444,11 +458,13 @@ Based on market research (Q1 2026):
 **Timeline**: Within 48 hours of report receipt
 
 1. **Triage**:
+
    - Categorize findings by severity
    - Assign to team members
    - Estimate fix effort
 
 2. **Critical Fixes**:
+
    - Drop all other work
    - Implement patches
    - Write regression tests
@@ -483,12 +499,14 @@ Based on market research (Q1 2026):
 **Process**:
 
 1. **Prepare Blog Post**:
+
    - Summarize audit process
    - Highlight key findings (appropriately redacted)
    - Thank security researchers
    - Outline remediation steps
 
 2. **Update Documentation**:
+
    - Add audit report link to README
    - Update SECURITY.md with lessons learned
    - Publish updated threat model
@@ -516,18 +534,21 @@ The audit will be considered successful when:
 ### 10.2 Quality Metrics
 
 **Code Quality**:
+
 - ✅ < 1% bug rate (bugs per KLOC)
 - ✅ 100% unit test coverage on critical paths
 - ✅ Zero compiler warnings
 - ✅ All clippy lints pass
 
 **Documentation Quality**:
+
 - ✅ All security docs complete
 - ✅ Test environment ready
 - ✅ Clear escalation procedures
 - ✅ Comprehensive threat model
 
 **Process Quality**:
+
 - ✅ Responsive communication (< 24h)
 - ✅ Transparent about limitations
 - ✅ Proactive about fixes
@@ -540,12 +561,14 @@ The audit will be considered successful when:
 ### 11.1 Pre-Audit Learnings
 
 **What Went Well**:
+
 - Comprehensive documentation created upfront
 - Strong test coverage (50+ tests on escrow)
 - Clean code that passes all lints
 - Minimal dependencies reduce attack surface
 
 **Areas for Improvement**:
+
 - Could have implemented multi-sig earlier
 - More cross-contract integration tests needed
 - Fuzzing infrastructure could be more robust
@@ -556,11 +579,13 @@ The audit will be considered successful when:
 After audit completion:
 
 1. **Implement Recommendations**:
+
    - Address all findings systematically
    - Update coding standards
    - Enhance monitoring
 
 2. **Process Improvements**:
+
    - Regular security reviews (quarterly)
    - Annual third-party audits
    - Bug bounty program launch
@@ -578,11 +603,11 @@ After audit completion:
 
 ### Key Contacts
 
-| Role | Email | Purpose |
-|------|-------|---------|
-| Security Lead | security@mentorminds.io | Primary audit contact |
-| Engineering | engineering@mentorminds.io | Technical questions |
-| CTO | cto@mentorminds.io | Escalation |
+| Role          | Email                      | Purpose               |
+| ------------- | -------------------------- | --------------------- |
+| Security Lead | security@mentorminds.io    | Primary audit contact |
+| Engineering   | engineering@mentorminds.io | Technical questions   |
+| CTO           | cto@mentorminds.io         | Escalation            |
 
 ### Repository Links
 
@@ -600,10 +625,10 @@ After audit completion:
 
 ## Appendix B: Document Changelog
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2026-03-25 | Security Team | Initial creation |
-| | | | |
+| Version | Date       | Author        | Changes          |
+| ------- | ---------- | ------------- | ---------------- |
+| 1.0     | 2026-03-25 | Security Team | Initial creation |
+|         |            |               |                  |
 
 ---
 

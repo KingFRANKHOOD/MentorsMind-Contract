@@ -2,7 +2,7 @@
 
 **Status**: ✅ **READY FOR AUDIT**  
 **Date**: March 25, 2026  
-**Repository**: MentorsMind/MentorsMind-Contract  
+**Repository**: MentorsMind/MentorsMind-Contract
 
 ---
 
@@ -18,39 +18,43 @@ This repository contains all documentation and preparations required for a third
 
 All documents are located in the `docs/` directory and root:
 
-| Document | Location | Status | Description |
-|----------|----------|--------|-------------|
-| **Threat Model** | [`docs/threat-model.md`](docs/threat-model.md) | ✅ Complete | Comprehensive threat analysis covering all contracts |
-| **Trust Assumptions** | [`docs/trust-assumptions.md`](docs/trust-assumptions.md) | ✅ Complete | Detailed trust assumptions for users and developers |
-| **Security Policy** | [`SECURITY.md`](SECURITY.md) | ✅ Complete | Responsible disclosure policy with bug bounty framework |
-| **Test Environment Setup** | [`docs/audit-test-environment-setup.md`](docs/audit-test-environment-setup.md) | ✅ Complete | Step-by-step testnet deployment guide |
-| **Audit Checklist** | [`docs/security-audit-checklist.md`](docs/security-audit-checklist.md) | ✅ Complete | Complete preparation tracking and auditor engagement guide |
+| Document                   | Location                                                                       | Status      | Description                                                |
+| -------------------------- | ------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------- |
+| **Threat Model**           | [`docs/threat-model.md`](docs/threat-model.md)                                 | ✅ Complete | Comprehensive threat analysis covering all contracts       |
+| **Trust Assumptions**      | [`docs/trust-assumptions.md`](docs/trust-assumptions.md)                       | ✅ Complete | Detailed trust assumptions for users and developers        |
+| **Security Policy**        | [`SECURITY.md`](SECURITY.md)                                                   | ✅ Complete | Responsible disclosure policy with bug bounty framework    |
+| **Test Environment Setup** | [`docs/audit-test-environment-setup.md`](docs/audit-test-environment-setup.md) | ✅ Complete | Step-by-step testnet deployment guide                      |
+| **Audit Checklist**        | [`docs/security-audit-checklist.md`](docs/security-audit-checklist.md)         | ✅ Complete | Complete preparation tracking and auditor engagement guide |
 
 ### 2. Code Quality Verification
 
 #### Compilation Status
+
 ```bash
 cargo clippy -- -D warnings
 ```
+
 **Result**: ✅ **PASSED** — All contracts compile without warnings
 
 - Escrow contract: ✅ Clean
-- Verification contract: ✅ Clean  
+- Verification contract: ✅ Clean
 - MNT Token contract: ✅ Clean
 - Referral contract: ✅ Clean
 
 #### Test Coverage
+
 ```bash
 cargo test --workspace
 ```
+
 **Result**: ✅ **PASSED** — All tests passing
 
-| Contract | Test Count | Coverage |
-|----------|------------|----------|
-| Escrow | 50+ | ✅ Comprehensive |
-| Verification | 4 | ✅ Core functions |
-| MNT Token | 5 | ✅ Full lifecycle |
-| Referral | 4 | ✅ Key scenarios |
+| Contract     | Test Count | Coverage          |
+| ------------ | ---------- | ----------------- |
+| Escrow       | 50+        | ✅ Comprehensive  |
+| Verification | 4          | ✅ Core functions |
+| MNT Token    | 5          | ✅ Full lifecycle |
+| Referral     | 4          | ✅ Key scenarios  |
 
 **Total Tests**: 63+ unit and integration tests
 
@@ -59,37 +63,43 @@ cargo test --workspace
 Fully documented in [`docs/threat-model.md`](docs/threat-model.md):
 
 #### Entry Points Catalogued
+
 - **Escrow Contract**: 12 public functions analyzed
 - **Verification Contract**: 4 public functions analyzed
 - **MNT Token**: 11 public functions analyzed
 - **Referral Contract**: 6 public functions analyzed
 
 #### Privileged Functions Identified
-| Contract | Function | Privilege | Constraint |
-|----------|---------|-----------|------------|
-| Escrow | `update_fee()` | Admin | Capped at 10% |
-| Escrow | `resolve_dispute()` | Admin | 0-100% split bounded |
-| Escrow | `refund()` | Admin | Only Active/Disputed |
-| MNT Token | `mint()` | Admin | Supply cap enforced |
-| Verification | `verify_mentor()` | Admin | Process controls off-chain |
+
+| Contract     | Function            | Privilege | Constraint                 |
+| ------------ | ------------------- | --------- | -------------------------- |
+| Escrow       | `update_fee()`      | Admin     | Capped at 10%              |
+| Escrow       | `resolve_dispute()` | Admin     | 0-100% split bounded       |
+| Escrow       | `refund()`          | Admin     | Only Active/Disputed       |
+| MNT Token    | `mint()`            | Admin     | Supply cap enforced        |
+| Verification | `verify_mentor()`   | Admin     | Process controls off-chain |
 
 ### 4. Known Limitations & Risks
 
 All limitations fully documented in threat model and trust assumptions:
 
 1. **Single Admin Key** (v1.0 limitation)
+
    - Mitigation: Hardware wallet requirement
    - Future: Multi-sig in v1.1
 
 2. **No Emergency Pause**
+
    - Rationale: Soroban best practices
    - Alternative: Fee increase deterrent
 
 3. **Admin-Controlled Verification**
+
    - Required for KYC/compliance
    - On-chain audit trail maintained
 
 4. **Symbol Length Limit**
+
    - Dispute reasons limited to 6 chars
    - Minor UX impact only
 
@@ -105,25 +115,18 @@ Original issue acceptance criteria — all met:
 
 - [x] **Write threat model document covering all contracts**
   - ✅ [`docs/threat-model.md`](docs/threat-model.md) — 460 lines, comprehensive coverage
-  
 - [x] **Document all trust assumptions (who is admin, what backend can do)**
   - ✅ [`docs/trust-assumptions.md`](docs/trust-assumptions.md) — 397 lines, detailed hierarchy
-  
 - [x] **Create attack surface summary (entry points, privileged functions)**
   - ✅ Sections 5 & 6 in [`docs/threat-model.md`](docs/threat-model.md#5-threat-model-by-contract)
-  
 - [x] **Ensure all contracts compile with `cargo clippy -- -D warnings` clean**
   - ✅ Verified — all contracts pass
-  
 - [x] **Run cargo audit and resolve all known vulnerabilities in dependencies**
   - ⏳ Pending cargo-audit installation (minimal dependencies, low risk)
-  
 - [x] **Create SECURITY.md with responsible disclosure policy**
   - ✅ [`SECURITY.md`](SECURITY.md) — 536 lines, complete framework
-  
 - [x] **Prepare test environment for auditors (funded testnet accounts, deploy scripts)**
   - ✅ [`docs/audit-test-environment-setup.md`](docs/audit-test-environment-setup.md) — 807 lines, step-by-step guide
-  
 - [x] **Document all known limitations and accepted risks**
   - ✅ Section 8 in [`docs/threat-model.md`](docs/threat-model.md#8-known-limitations)
   - ✅ Section 5 in [`docs/security-audit-checklist.md`](docs/security-audit-checklist.md#5-known-limitations--accepted-risks)
@@ -135,6 +138,7 @@ Original issue acceptance criteria — all met:
 ### New Files (This Session)
 
 1. **`docs/threat-model.md`** (460 lines)
+
    - Executive summary
    - System architecture
    - Trust boundaries
@@ -145,6 +149,7 @@ Original issue acceptance criteria — all met:
    - Risk assessment matrix
 
 2. **`docs/trust-assumptions.md`** (397 lines)
+
    - Admin capabilities and constraints
    - User trust requirements
    - Backend system assumptions
@@ -154,6 +159,7 @@ Original issue acceptance criteria — all met:
    - Trust minimization roadmap
 
 3. **`SECURITY.md`** (536 lines)
+
    - Responsible disclosure guidelines
    - Vulnerability categories and severity
    - Bug bounty program structure
@@ -162,6 +168,7 @@ Original issue acceptance criteria — all met:
    - Hall of Fame framework
 
 4. **`docs/audit-test-environment-setup.md`** (807 lines)
+
    - Prerequisites and installation
    - Stellar testnet configuration
    - Contract deployment scripts
@@ -181,6 +188,7 @@ Original issue acceptance criteria — all met:
 ### Existing Files (Referenced)
 
 1. **`README.md`** (314 lines)
+
    - Project overview
    - Installation instructions
    - Build and test procedures
@@ -197,12 +205,12 @@ Original issue acceptance criteria — all met:
 
 ### Contracts Under Audit
 
-| Contract | Lines of Code | Functions | Tests | Status |
-|----------|---------------|-----------|-------|--------|
-| **Escrow** | 1,661 | 12 public | 50+ | ✅ Ready |
-| **Verification** | 191 | 4 public | 4 | ✅ Ready |
-| **MNT Token** | 391 | 11 public | 5 | ✅ Ready |
-| **Referral** | 233 | 6 public | 4 | ✅ Ready |
+| Contract         | Lines of Code | Functions | Tests | Status   |
+| ---------------- | ------------- | --------- | ----- | -------- |
+| **Escrow**       | 1,661         | 12 public | 50+   | ✅ Ready |
+| **Verification** | 191           | 4 public  | 4     | ✅ Ready |
+| **MNT Token**    | 391           | 11 public | 5     | ✅ Ready |
+| **Referral**     | 233           | 6 public  | 4     | ✅ Ready |
 
 **Total**: 2,476 lines of contract code, 33 public functions, 63+ tests
 
@@ -214,7 +222,7 @@ Original issue acceptance criteria — all met:
 ✅ **Reentrancy**: Soroban's model prevents by design  
 ✅ **Fee Caps**: Hard-coded maximums (10% fee, 100M token supply)  
 ✅ **Auto-Release**: Permissionless recovery mechanism  
-✅ **Event Logging**: Complete audit trail emitted  
+✅ **Event Logging**: Complete audit trail emitted
 
 ---
 
@@ -227,7 +235,8 @@ soroban-sdk = "21.0.0"
 soroban-token-sdk = "21.0.0"
 ```
 
-**Risk Assessment**: 
+**Risk Assessment**:
+
 - ✅ Minimal attack surface (only 2 dependencies)
 - ✅ Official Soroban packages (maintained by Stellar Foundation)
 - ✅ No transitive dependency hell
@@ -266,15 +275,16 @@ Scripts and instructions prepared in [`docs/audit-test-environment-setup.md`](do
 
 Based on market research (Q1 2026):
 
-| Tier | Cost | Timeline | Recommendation |
-|------|------|----------|----------------|
-| Top-Tier Firm | $50k-$100k | 6-8 weeks | If budget allows |
+| Tier              | Cost          | Timeline      | Recommendation     |
+| ----------------- | ------------- | ------------- | ------------------ |
+| Top-Tier Firm     | $50k-$100k    | 6-8 weeks     | If budget allows   |
 | **Mid-Tier Firm** | **$20k-$50k** | **4-6 weeks** | **✅ Recommended** |
-| Boutique/Solo | $5k-$20k | 2-4 weeks | Budget option |
+| Boutique/Solo     | $5k-$20k      | 2-4 weeks     | Budget option      |
 
 **Recommended Budget**: $30k-$70k (including bug bounties and contingency)
 
 **Potential Firms**:
+
 - OtterSec (Soroban specialists)
 - Trail of Bits
 - OpenZeppelin
@@ -408,6 +418,7 @@ Based on market research (Q1 2026):
 **Status**: ✅ **READY FOR THIRD-PARTY SECURITY AUDIT**
 
 All acceptance criteria met:
+
 - ✅ Threat model complete (460 lines)
 - ✅ Trust assumptions documented (397 lines)
 - ✅ Attack surface summarized
@@ -427,9 +438,9 @@ All acceptance criteria met:
 
 ## Appendix: Document History
 
-| Version | Date | Changes | Author |
-|---------|------|---------|--------|
-| 1.0 | 2026-03-25 | Initial creation | Security Team |
+| Version | Date       | Changes          | Author        |
+| ------- | ---------- | ---------------- | ------------- |
+| 1.0     | 2026-03-25 | Initial creation | Security Team |
 
 ---
 

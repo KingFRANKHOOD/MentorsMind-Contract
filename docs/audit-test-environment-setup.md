@@ -2,7 +2,7 @@
 
 **Version**: 1.0  
 **Date**: March 25, 2026  
-**Purpose**: Prepare test environment for third-party security auditors  
+**Purpose**: Prepare test environment for third-party security auditors
 
 ---
 
@@ -16,13 +16,13 @@ This document provides step-by-step instructions for setting up a complete test 
 
 ### System Requirements
 
-| Requirement | Version | Installation |
-|-------------|---------|--------------|
-| **Rust** | 1.70+ | `rustup install stable` |
-| **wasm32-unknown-unknown target** | - | `rustup target add wasm32-unknown-unknown` |
-| **Soroban CLI** | Latest | `cargo install --locked soroban-cli` |
-| **Node.js** | 18+ | Download from nodejs.org |
-| **jq** | Latest | `choco install jq` (Windows) |
+| Requirement                       | Version | Installation                               |
+| --------------------------------- | ------- | ------------------------------------------ |
+| **Rust**                          | 1.70+   | `rustup install stable`                    |
+| **wasm32-unknown-unknown target** | -       | `rustup target add wasm32-unknown-unknown` |
+| **Soroban CLI**                   | Latest  | `cargo install --locked soroban-cli`       |
+| **Node.js**                       | 18+     | Download from nodejs.org                   |
+| **jq**                            | Latest  | `choco install jq` (Windows)               |
 
 ### Verification
 
@@ -129,6 +129,7 @@ ls -lh target/wasm32-unknown-unknown/release/*.wasm
 ```
 
 Expected output:
+
 ```
 mentorminds_escrow.wasm
 mentorminds_verification.wasm
@@ -245,6 +246,7 @@ stellar contract invoke \
 ```
 
 Parameters:
+
 - `fee_bps = 500` → 5% platform fee
 - `auto_release_delay_secs = 86400` → 24 hours (shortened for testing)
 
@@ -687,21 +689,25 @@ stellar events --id "$ESCROW_ID" --network "$NETWORK" --limit 10
 ### After Audit Completion
 
 1. **Receive Audit Report**:
+
    - Critical/High/Medium/Low findings
    - Remediation recommendations
    - Overall security assessment
 
 2. **Triage Findings**:
+
    - Immediate action for Critical/High
    - Schedule Medium for next sprint
    - Accept or mitigate Low
 
 3. **Implement Fixes**:
+
    - Create fix branches
    - Write regression tests
    - Internal code review
 
 4. **Deploy Patches**:
+
    - Deploy to testnet first
    - Verify fixes with auditors
    - Mainnet deployment after sign-off
@@ -717,11 +723,11 @@ stellar events --id "$ESCROW_ID" --network "$NETWORK" --limit 10
 
 ### Audit Coordination Team
 
-| Role | Contact | Availability |
-|------|---------|--------------|
-| Lead Smart Contract Engineer | engineering@mentorminds.io | UTC 9-5 |
-| Security Lead | security@mentorminds.io | 24/7 for urgent |
-| CTO | cto@mentorminds.io | By appointment |
+| Role                         | Contact                    | Availability    |
+| ---------------------------- | -------------------------- | --------------- |
+| Lead Smart Contract Engineer | engineering@mentorminds.io | UTC 9-5         |
+| Security Lead                | security@mentorminds.io    | 24/7 for urgent |
+| CTO                          | cto@mentorminds.io         | By appointment  |
 
 ### Communication Channels
 
@@ -733,6 +739,7 @@ stellar events --id "$ESCROW_ID" --network "$NETWORK" --limit 10
 ### Emergency Contacts
 
 For critical issues discovered during audit:
+
 1. Email security@mentorminds.io with "[CRITICAL]" in subject
 2. Telegram @mentorminds_security
 3. Do NOT disclose publicly until coordinated response
@@ -777,27 +784,27 @@ soroban balance <IDENTITY> --network testnet
 
 ## Appendix B: Test Account Summary
 
-*To be filled after deployment*
+_To be filled after deployment_
 
-| Account | Address | Purpose | Initial Balance |
-|---------|---------|---------|-----------------|
-| Admin | TBD | Contract administration | 10,000 XLM |
-| Treasury | TBD | Fee collection | 10,000 XLM |
-| Learner | TBD | Test escrow creation | 10,000 XLM |
-| Mentor | TBD | Test session delivery | 10,000 XLM |
+| Account  | Address | Purpose                 | Initial Balance |
+| -------- | ------- | ----------------------- | --------------- |
+| Admin    | TBD     | Contract administration | 10,000 XLM      |
+| Treasury | TBD     | Fee collection          | 10,000 XLM      |
+| Learner  | TBD     | Test escrow creation    | 10,000 XLM      |
+| Mentor   | TBD     | Test session delivery   | 10,000 XLM      |
 
 ---
 
 ## Appendix C: Contract Deployment Summary
 
-*To be filled after deployment*
+_To be filled after deployment_
 
-| Contract | Testnet ID | Mainnet ID (TBD) |
-|----------|------------|------------------|
-| Escrow | TBD | TBD |
-| Verification | TBD | TBD |
-| MNT Token | TBD | TBD |
-| Referral | TBD | TBD |
+| Contract     | Testnet ID | Mainnet ID (TBD) |
+| ------------ | ---------- | ---------------- |
+| Escrow       | TBD        | TBD              |
+| Verification | TBD        | TBD              |
+| MNT Token    | TBD        | TBD              |
+| Referral     | TBD        | TBD              |
 
 ---
 

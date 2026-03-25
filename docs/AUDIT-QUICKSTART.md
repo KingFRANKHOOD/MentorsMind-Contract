@@ -2,7 +2,7 @@
 
 **For**: Third-party security auditors  
 **Version**: 1.0  
-**Date**: March 25, 2026  
+**Date**: March 25, 2026
 
 ---
 
@@ -56,10 +56,12 @@ cargo test -p mentorminds-referral --lib
 **Minimum reading to start**:
 
 1. **[Threat Model](docs/threat-model.md)** — Sections 5 & 6 only (10 min read)
+
    - Threat scenarios by contract
    - Attack surface analysis
 
 2. **[Security Policy](SECURITY.md)** — Section 4 only (5 min read)
+
    - Vulnerability categories
    - Severity definitions
 
@@ -89,21 +91,21 @@ contracts/
 
 #### Escrow Contract
 
-| Function | Line | Risk | What to Check |
-|----------|------|------|---------------|
-| `create_escrow()` | 252 | High | Authorization, balance checks, token approval |
-| `release_funds()` | 357 | High | Fee calculation, authorization, state transition |
-| `try_auto_release()` | 402 | Medium | Timestamp boundary, permissionless access |
-| `resolve_dispute()` | 521 | High | Admin auth, percentage bounds, fund split |
-| `refund()` | 626 | High | State checks, admin-only, transfer logic |
+| Function             | Line | Risk   | What to Check                                    |
+| -------------------- | ---- | ------ | ------------------------------------------------ |
+| `create_escrow()`    | 252  | High   | Authorization, balance checks, token approval    |
+| `release_funds()`    | 357  | High   | Fee calculation, authorization, state transition |
+| `try_auto_release()` | 402  | Medium | Timestamp boundary, permissionless access        |
+| `resolve_dispute()`  | 521  | High   | Admin auth, percentage bounds, fund split        |
+| `refund()`           | 626  | High   | State checks, admin-only, transfer logic         |
 
 #### MNT Token
 
-| Function | Line | Risk | What to Check |
-|----------|------|------|---------------|
-| `mint()` | 71 | High | Admin auth, supply cap enforcement |
-| `transfer()` | 183 | Medium | Authorization, balance checks |
-| `approve()` / `transfer_from()` | 148 / 216 | Medium | Allowance logic, race conditions |
+| Function                        | Line      | Risk   | What to Check                      |
+| ------------------------------- | --------- | ------ | ---------------------------------- |
+| `mint()`                        | 71        | High   | Admin auth, supply cap enforcement |
+| `transfer()`                    | 183       | Medium | Authorization, balance checks      |
+| `approve()` / `transfer_from()` | 148 / 216 | Medium | Allowance logic, race conditions   |
 
 ---
 
@@ -160,6 +162,7 @@ stellar contract deploy \
 ### Escrow Contract (50+ tests)
 
 **Coverage**:
+
 - ✅ Initialization and double-init prevention
 - ✅ Escrow creation (valid, invalid amounts, unapproved tokens)
 - ✅ Fund release (learner, admin, unauthorized, double-release)
@@ -234,11 +237,11 @@ cargo fuzz run fuzz_target_1
 
 ### Contact Channels
 
-| Purpose | Contact | Response Time |
-|---------|---------|---------------|
-| Technical questions | engineering@mentorminds.io | < 24h |
-| Vulnerability reports | security@mentorminds.io | < 24h |
-| Urgent escalation | security@mentorminds.io w/ [URGENT] | < 4h |
+| Purpose               | Contact                             | Response Time |
+| --------------------- | ----------------------------------- | ------------- |
+| Technical questions   | engineering@mentorminds.io          | < 24h         |
+| Vulnerability reports | security@mentorminds.io             | < 24h         |
+| Urgent escalation     | security@mentorminds.io w/ [URGENT] | < 4h          |
 
 ### Communication Preferences
 
@@ -256,39 +259,46 @@ cargo fuzz run fuzz_target_1
 ## Vulnerability Report
 
 ### Severity
+
 [Critical / High / Medium / Low]
 
 ### Location
+
 - Contract: `escrow/src/lib.rs`
 - Function: `release_funds()`
 - Line: ~380
 
 ### Description
+
 [Brief description of the issue]
 
 ### Impact
+
 [What can an attacker achieve?]
 
 ### Reproduction Steps
+
 1. Step 1
 2. Step 2
 3. ...
 
 ### Proof of Concept
+
 [Test code or transaction hash]
 
 ### Suggested Fix
+
 [If known]
 ```
 
 ### Severity Definitions
 
-| Severity | Criteria | Examples |
-|----------|----------|----------|
-| **Critical** | Direct loss of funds, permanent lockup | Authorization bypass, reentrancy theft |
-| **High** | Temporary fund freezing, fee manipulation | Logic errors, boundary conditions |
-| **Medium** | Minor financial impact, information leakage | Off-by-one errors, missing events |
-| **Low** | Best practice deviations, gas optimization | Code style, documentation errors |
+| Severity     | Criteria                                    | Examples                               |
+| ------------ | ------------------------------------------- | -------------------------------------- |
+| **Critical** | Direct loss of funds, permanent lockup      | Authorization bypass, reentrancy theft |
+| **High**     | Temporary fund freezing, fee manipulation   | Logic errors, boundary conditions      |
+| **Medium**   | Minor financial impact, information leakage | Off-by-one errors, missing events      |
+| **Low**      | Best practice deviations, gas optimization  | Code style, documentation errors       |
 
 ---
 
@@ -354,13 +364,13 @@ cargo fuzz run fuzz_target_1
 
 ## 📈 Current Status
 
-| Item | Status |
-|------|--------|
-| Documentation | ✅ Complete |
-| Code Quality | ✅ Clean (0 warnings) |
-| Tests | ✅ Passing (63+) |
-| Test Environment | 🟡 Ready to deploy |
-| Dependencies | ✅ Minimal (2 total) |
+| Item             | Status                |
+| ---------------- | --------------------- |
+| Documentation    | ✅ Complete           |
+| Code Quality     | ✅ Clean (0 warnings) |
+| Tests            | ✅ Passing (63+)      |
+| Test Environment | 🟡 Ready to deploy    |
+| Dependencies     | ✅ Minimal (2 total)  |
 
 ---
 
@@ -369,6 +379,7 @@ cargo fuzz run fuzz_target_1
 **Eligible**: Yes, if following responsible disclosure
 
 **Rewards**:
+
 - Critical: Up to $10,000
 - High: Up to $5,000
 - Medium: Up to $1,000
